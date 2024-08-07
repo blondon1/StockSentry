@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn
+nltk
+beautifulsoup4
+requests
+smtplib
+transformers
+torch
