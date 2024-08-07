@@ -2,7 +2,7 @@
 
 import requests
 
-def send_email(subject, body, to_email):
+def send_email(stock, predicted_movement, movement_in_dollars, max_low, max_high, to_email):
     service_id = 'YOUR_SERVICE_ID'
     template_id = 'YOUR_TEMPLATE_ID'
     user_id = 'YOUR_USER_ID'
@@ -18,8 +18,11 @@ def send_email(subject, body, to_email):
         'template_id': template_id,
         'user_id': user_id,
         'template_params': {
-            'subject': subject,
-            'body': body,
+            'stock': stock,
+            'predicted_movement': predicted_movement,
+            'movement_in_dollars': movement_in_dollars,
+            'max_low': max_low,
+            'max_high': max_high,
             'to_email': to_email,
         }
     }
@@ -32,6 +35,7 @@ def send_email(subject, body, to_email):
         print(f"Failed to send email: {response.text}")
 
 if __name__ == "__main__":
-    send_email('Test Subject', 'Test Body', 'recipient@example.com')
+    send_email('AAPL', 0.35, '$35.00', -0.5, 0.9, 'recipient@example.com')
+
 
 
