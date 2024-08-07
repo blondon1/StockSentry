@@ -47,18 +47,20 @@ def main():
                 labels = merged_data['Close']
                 
                 model = train_model(features, labels)
-                prediction = predict_stock_movement(model, features)
+                predicted_prices = predict_stock_movement(model, features)
                 
-                predicted_movement = prediction.mean()
-                movement_in_dollars = f"${predicted_movement * 100:.2f}" 
+                predicted_price = predicted_prices.mean()  # Use the mean predicted price for simplicity
+                current_price = float(fetch_current_price(stock))
+                
+                # Calculate movement in dollars as the difference between current price and predicted price
+                movement_in_dollars = f"${predicted_price - current_price:.2f}" 
                 max_low = min(sentiment_scores)
                 max_high = max(sentiment_scores)
-                current_price = fetch_current_price(stock)
                 
                 stocks_info.append({
                     'stock': stock,
-                    'current_price': f"${float(current_price):.2f}",
-                    'predicted_movement': f"{predicted_movement:.2f}",
+                    'current_price': f"${current_price:.2f}",
+                    'predicted_movement': f"${predicted_price:.2f}",
                     'movement_in_dollars': movement_in_dollars,
                     'max_low': f"{max_low:.2f}",
                     'max_high': f"{max_high:.2f}"
@@ -72,6 +74,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
