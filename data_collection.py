@@ -3,12 +3,11 @@
 import requests
 
 def fetch_news(stock):
-    api_key = 'YOUR_NEWS_API_KEY'
+    api_key = 'YOUR_NEWS_API_KEY'  # Replace with your actual news API key
     url = f'https://newsapi.org/v2/everything?q={stock}&apiKey={api_key}'
+    
     response = requests.get(url)
-    return response.json()
+    data = response.json()
+    
+    return data
 
-if __name__ == "__main__":
-    watchlist = ['AAPL', 'GOOGL', 'AMZN', 'TSLA']
-    for stock in watchlist:
-        print(fetch_news(stock))
