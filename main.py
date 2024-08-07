@@ -23,6 +23,7 @@ def main():
         for stock in watchlist:
             news_data = fetch_news(stock)
             sentiment_scores = []
+            dates = []
             
             for article in news_data['articles']:
                 description = article.get('description')
@@ -30,18 +31,20 @@ def main():
                     preprocessed_text = preprocess_text(description)
                     sentiment_score = get_sentiment(preprocessed_text)['score']
                     sentiment_scores.append(sentiment_score)
+                    dates.append(article['publishedAt'][:10])  # Assuming the date is in 'publishedAt'
             
             if sentiment_scores:
-                current_data = pd.DataFrame({'sentiment_score': sentiment_scores})
-                historical = historical_data[stock].iloc[-1]
-                current_data['SMA_20'] = historical['SMA_20']
-                current_data['SMA_50'] = historical['SMA_50']
-                current_data['RSI'] = historical['RSI']
-                current_data['Bollinger_Upper'] = historical['Bollinger_Upper']
-                current_data['Bollinger_Lower'] = historical['Bollinger_Lower']
+                current_data = pd.DataFrame({'date': dates, 'sentiment_score': sentiment_scores})
+                historical = historical_data[stock]
                 
-                model = train_model(current_data, historical_data[stock]['Close'])
-                prediction = predict_stock_movement(model, current_data)
+                # Align sentiment scores with historical data
+                merged_data = pd.merge(current_data, historical, left_on='date', right_on='Date', how='inner')
+                
+                features = merged_data[['sentiment_score', 'SMA_20', 'SMA_50', 'RSI', 'Bollinger_Upper', 'Bollinger_Lower']]
+                labels = merged_data['Close']
+                
+                model = train_model(features, labels)
+                prediction = predict_stock_movement(model, features)
                 
                 predicted_movement = prediction.mean()
                 movement_in_dollars = f"${predicted_movement * 100:.2f}" 
@@ -66,6 +69,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

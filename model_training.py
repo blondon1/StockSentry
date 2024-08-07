@@ -1,7 +1,6 @@
 # model_training.py
 
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 import yfinance as yf
@@ -26,6 +25,7 @@ def calculate_rsi(series, period=14):
 def fetch_historical_data(stock):
     df = yf.download(stock, period='1y')
     df = calculate_technical_indicators(df)
+    df.reset_index(inplace=True)
     return df
 
 def train_model(features, labels):
@@ -36,4 +36,5 @@ def train_model(features, labels):
 
 def predict_stock_movement(model, features):
     return model.predict(features)
+
 
