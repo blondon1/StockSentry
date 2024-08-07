@@ -28,13 +28,18 @@ def main():
             current_data = pd.DataFrame({'sentiment_score': sentiment_scores, 'other_feature': [3] * len(sentiment_scores)})
             prediction = predict_stock_movement(model, current_data)
             
-            subject = f"Daily Update for {stock}"
-            body = f"Predicted movement: {prediction.mean()}\nMax Low: {min(sentiment_scores)}\nMax High: {max(sentiment_scores)}"
-            send_email(subject, body, 'your_email@example.com')
+            predicted_movement = prediction.mean()
+            # Assuming a conversion factor to translate sentiment score to dollars for the example
+            movement_in_dollars = f"${predicted_movement * 100:.2f}" 
+            max_low = min(sentiment_scores)
+            max_high = max(sentiment_scores)
+            
+            send_email(stock, predicted_movement, movement_in_dollars, max_low, max_high, 'your_email@example.com')
 
         # Sleep for a defined period (e.g., 1 hour)
         time.sleep(3600)
 
 if __name__ == "__main__":
     main()
+
 
