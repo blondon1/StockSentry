@@ -6,14 +6,10 @@ from data_collection import fetch_news
 from sentiment_analysis import preprocess_text, get_sentiment
 from model_training import train_model, predict_stock_movement
 from email_notifications import send_email
+from stock_price import fetch_current_price  # Import the function from stock_price.py
 
 # Define your watchlist
 watchlist = ['AAPL', 'GOOGL', 'AMZN', 'TSLA', 'MSFT']
-
-def fetch_current_price(stock):
-    # Mock function to get the current price of the stock
-    # Replace with actual API call to fetch current price
-    return f"${150 + hash(stock) % 50:.2f}"  # Mock price generation
 
 def main():
     # Example training data
@@ -52,7 +48,7 @@ def main():
                 
                 stocks_info.append({
                     'stock': stock,
-                    'current_price': current_price,
+                    'current_price': f"${float(current_price):.2f}",
                     'predicted_movement': f"{predicted_movement:.2f}",
                     'movement_in_dollars': movement_in_dollars,
                     'max_low': f"{max_low:.2f}",
@@ -67,6 +63,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
