@@ -6,6 +6,7 @@ def send_email(stock, predicted_movement, movement_in_dollars, max_low, max_high
     service_id = 'YOUR_SERVICE_ID'
     template_id = 'YOUR_TEMPLATE_ID'
     user_id = 'YOUR_USER_ID'
+    private_key = 'YOUR_PRIVATE_KEY'
     
     url = 'https://api.emailjs.com/api/v1.0/email/send'
     
@@ -17,6 +18,7 @@ def send_email(stock, predicted_movement, movement_in_dollars, max_low, max_high
         'service_id': service_id,
         'template_id': template_id,
         'user_id': user_id,
+        'accessToken': private_key,
         'template_params': {
             'stock': stock,
             'predicted_movement': predicted_movement,
