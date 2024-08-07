@@ -8,7 +8,12 @@ from model_training import train_model, predict_stock_movement
 from email_notifications import send_email
 
 # Define your watchlist
-watchlist = ['AAPL', 'GOOGL', 'AMZN', 'TSLA']
+watchlist = ['AAPL', 'GOOGL', 'AMZN', 'TSLA', 'MSFT']
+
+def fetch_current_price(stock):
+    # Mock function to get the current price of the stock
+    # Replace with actual API call to fetch current price
+    return f"${150 + hash(stock) % 50:.2f}"  # Mock price generation
 
 def main():
     # Example training data
@@ -21,26 +26,48 @@ def main():
     model = train_model(features, labels)
     
     while True:
+        stocks_info = []
+        
         for stock in watchlist:
             news_data = fetch_news(stock)
-            sentiment_scores = [get_sentiment(preprocess_text(article['description']))['score'] for article in news_data['articles']]
+            sentiment_scores = []
             
-            current_data = pd.DataFrame({'sentiment_score': sentiment_scores, 'other_feature': [3] * len(sentiment_scores)})
-            prediction = predict_stock_movement(model, current_data)
+            for article in news_data['articles']:
+                description = article.get('description')
+                if description:
+                    preprocessed_text = preprocess_text(description)
+                    sentiment_score = get_sentiment(preprocessed_text)['score']
+                    sentiment_scores.append(sentiment_score)
             
-            predicted_movement = prediction.mean()
-            # Assuming a conversion factor to translate sentiment score to dollars for the example
-            movement_in_dollars = f"${predicted_movement * 100:.2f}" 
-            max_low = min(sentiment_scores)
-            max_high = max(sentiment_scores)
-            
-            send_email(stock, predicted_movement, movement_in_dollars, max_low, max_high, 'your_email@example.com')
+            if sentiment_scores:
+                current_data = pd.DataFrame({'sentiment_score': sentiment_scores, 'other_feature': [3] * len(sentiment_scores)})
+                prediction = predict_stock_movement(model, current_data)
+                
+                predicted_movement = prediction.mean()
+                # Assuming a conversion factor to translate sentiment score to dollars for the example
+                movement_in_dollars = f"${predicted_movement * 100:.2f}" 
+                max_low = min(sentiment_scores)
+                max_high = max(sentiment_scores)
+                current_price = fetch_current_price(stock)
+                
+                stocks_info.append({
+                    'stock': stock,
+                    'current_price': current_price,
+                    'predicted_movement': f"{predicted_movement:.2f}",
+                    'movement_in_dollars': movement_in_dollars,
+                    'max_low': f"{max_low:.2f}",
+                    'max_high': f"{max_high:.2f}"
+                })
+        
+        if stocks_info:
+            send_email(stocks_info, 'your_email@example.com')
 
         # Sleep for a defined period (e.g., 1 hour)
         time.sleep(3600)
 
 if __name__ == "__main__":
     main()
+
 
 
 
