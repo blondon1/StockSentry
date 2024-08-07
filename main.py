@@ -35,7 +35,10 @@ def main():
             
             if sentiment_scores:
                 current_data = pd.DataFrame({'date': dates, 'sentiment_score': sentiment_scores})
+                current_data['date'] = pd.to_datetime(current_data['date'])
+                
                 historical = historical_data[stock]
+                historical['Date'] = pd.to_datetime(historical['Date'])
                 
                 # Align sentiment scores with historical data
                 merged_data = pd.merge(current_data, historical, left_on='date', right_on='Date', how='inner')
@@ -69,6 +72,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
