@@ -1,9 +1,7 @@
-pandas
-numpy
-scikit-learn
-nltk
-beautifulsoup4
+cryptography
 requests
+pandas
+nltk
 transformers
-torch
-requests 
+scikit-learn
+yfinance
