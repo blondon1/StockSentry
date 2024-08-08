@@ -50,7 +50,12 @@ def main():
                 predicted_prices = predict_stock_movement(model, features)
                 
                 predicted_price = predicted_prices.mean()  # Use the mean predicted price for simplicity
-                current_price = float(fetch_current_price(stock))
+                current_price = fetch_current_price(stock)
+                
+                if current_price is None:
+                    continue  # Skip this stock if current price could not be fetched
+                
+                current_price = float(current_price)
                 
                 # Calculate movement in dollars as the difference between current price and predicted price
                 movement_in_dollars = f"${predicted_price - current_price:.2f}" 
@@ -74,6 +79,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

@@ -9,8 +9,9 @@ def fetch_current_price(stock):
     response = requests.get(url)
     data = response.json()
     
-    if 'Global Quote' in data:
+    if 'Global Quote' in data and '05. price' in data['Global Quote']:
         return data['Global Quote']['05. price']
     else:
         print(f"Error fetching price for {stock}: {data}")
-        return "N/A"
+        return None
+
