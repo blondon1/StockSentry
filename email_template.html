@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Stock Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+        }
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #000;
+        }
+        .stock-info {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Daily Stock Update</h1>
+        {{#stocks}}
+        <div class="stock-info">
+            <h2>{{stock}}</h2>
+            <p><strong>Current Price:</strong> {{current_price}}</p>
+            <p><strong>Predicted Movement:</strong> {{predicted_movement}} (Sentiment Score)</p>
+            <p><strong>Movement in Dollars:</strong> {{movement_in_dollars}}</p>
+            <p><strong>Max Low:</strong> {{max_low}} (Sentiment Score)</p>
+            <p><strong>Max High:</strong> {{max_high}} (Sentiment Score)</p>
+            <hr>
+        </div>
+        {{/stocks}}
+    </div>
+</body>
+</html>
