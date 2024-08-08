@@ -59,7 +59,7 @@ def main():
         stocks_info = []
         
         for stock in watchlist:
-            news_data = fetch_news(stock)
+            news_data = fetch_news(stock, config['news_api_key'])
             sentiment_scores = []
             dates = []
             
@@ -88,7 +88,7 @@ def main():
                 predicted_prices = predict_stock_movement(model, features)
                 
                 predicted_price = predicted_prices.mean()  # Use the mean predicted price for simplicity
-                current_price = fetch_current_price(stock)
+                current_price = fetch_current_price(stock, config['alpha_vantage_api_key'])
                 
                 if current_price is None:
                     continue  # Skip this stock if current price could not be fetched
@@ -110,21 +110,10 @@ def main():
                 })
         
         if stocks_info:
-            send_email(stocks_info, config['email_to'])
+            send_email(stocks_info, config['email_to'], config)
 
         # Sleep for a defined period (e.g., 1 hour)
         time.sleep(3600)
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
