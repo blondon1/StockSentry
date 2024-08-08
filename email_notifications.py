@@ -32,6 +32,9 @@ def send_email(stocks_info, to_email, config):
     else:
         print(f"Failed to send email: {response.text}")
 
+    print(f"Response status code: {response.status_code}")
+    print(f"Response content: {response.content}")
+
 if __name__ == "__main__":
     stocks_info = [
         {
