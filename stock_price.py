@@ -14,4 +14,3 @@ def fetch_current_price(stock):
     else:
         print(f"Error fetching price for {stock}: {data}")
         return None
-

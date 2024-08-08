@@ -7,5 +7,3 @@ def fetch_news(stock, api_key):
     response = requests.get(url)
     data = response.json()
     return data
-
-

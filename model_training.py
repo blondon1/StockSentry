@@ -36,5 +36,3 @@ def train_model(features, labels):
 
 def predict_stock_movement(model, features):
     return model.predict(features)
-
-

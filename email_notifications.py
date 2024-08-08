@@ -2,11 +2,11 @@
 
 import requests
 
-def send_email(stocks_info, to_email):
-    service_id = 'YOUR_SERVICE_ID'
-    template_id = 'YOUR_TEMPLATE_ID'
-    user_id = 'YOUR_USER_ID'
-    private_key = 'YOUR_PRIVATE_KEY'
+def send_email(stocks_info, to_email, config):
+    service_id = config['email_service_id']
+    template_id = config['email_template_id']
+    user_id = config['email_user_id']
+    private_key = config['email_private_key']
     
     url = 'https://api.emailjs.com/api/v1.0/email/send'
     
@@ -43,11 +43,11 @@ if __name__ == "__main__":
             'max_high': '0.9'
         }
     ]
-    send_email(stocks_info, 'recipient@example.com')
-
-
-
-
-
-
-
+    config = {
+        'email_service_id': 'your_service_id',
+        'email_template_id': 'your_template_id',
+        'email_user_id': 'your_user_id',
+        'email_private_key': 'your_private_key',
+        'email_to': 'recipient@example.com'
+    }
+    send_email(stocks_info, config['email_to'], config)

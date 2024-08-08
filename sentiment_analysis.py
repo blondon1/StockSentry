@@ -23,4 +23,3 @@ sentiment_pipeline = pipeline("sentiment-analysis", model=model, tokenizer=token
 
 def get_sentiment(text):
     return sentiment_pipeline(text)[0]
-
