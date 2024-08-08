@@ -2,16 +2,54 @@
 
 import time
 import pandas as pd
+import os
 from data_collection import fetch_news
 from sentiment_analysis import preprocess_text, get_sentiment
 from model_training import train_model, predict_stock_movement, fetch_historical_data
 from email_notifications import send_email
 from stock_price import fetch_current_price
+from crypto_utils import generate_key, load_key, save_key, save_config, load_config
 
-# Define your watchlist
-watchlist = ['AAPL', 'GOOGL', 'AMZN', 'TSLA', 'MSFT']
+def get_user_input():
+    api_key = input("Enter your Alpha Vantage API key: ")
+    news_api_key = input("Enter your News API key: ")
+    email_service_id = input("Enter your EmailJS service ID: ")
+    email_template_id = input("Enter your EmailJS template ID: ")
+    email_user_id = input("Enter your EmailJS user ID: ")
+    email_private_key = input("Enter your EmailJS private key: ")
+    email_to = input("Enter your email address to receive updates: ")
+    watchlist = input("Enter the five stocks for your watchlist (comma-separated): ").split(',')
+    
+    return {
+        "alpha_vantage_api_key": api_key,
+        "news_api_key": news_api_key,
+        "email_service_id": email_service_id,
+        "email_template_id": email_template_id,
+        "email_user_id": email_user_id,
+        "email_private_key": email_private_key,
+        "email_to": email_to,
+        "watchlist": [stock.strip() for stock in watchlist]
+    }
 
 def main():
+    if os.path.exists("config.enc"):
+        use_existing = input("Configuration file found. Do you want to use the current configuration? (yes/no): ").lower()
+        if use_existing == 'yes':
+            key = load_key()
+            config = load_config(key)
+        else:
+            config = get_user_input()
+            key = generate_key()
+            save_key(key)
+            save_config(config, key)
+    else:
+        config = get_user_input()
+        key = generate_key()
+        save_key(key)
+        save_config(config, key)
+
+    watchlist = config['watchlist']
+    
     # Prepare the historical data and technical indicators for model training
     historical_data = {}
     for stock in watchlist:
@@ -72,13 +110,14 @@ def main():
                 })
         
         if stocks_info:
-            send_email(stocks_info, 'your_email@example.com')
+            send_email(stocks_info, config['email_to'])
 
         # Sleep for a defined period (e.g., 1 hour)
         time.sleep(3600)
 
 if __name__ == "__main__":
     main()
+
 
 
 
