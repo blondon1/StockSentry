@@ -71,6 +71,7 @@ You will be prompted to enter:
 For future runs, you will be asked if you want to use the existing configuration.
 
 ### Screenshots 📸
+Screenshot was taken on 9/4/2024
 
 ![Email Screenshot](images/email_screenshot.png)
 *Example of a daily stock update email.*
