@@ -104,6 +104,3 @@ Thank you for your contributions!
 
 This project is licensed under the MIT License.
 
----
-
-**StockSentry - Empowering Your Investment Decisions with Advanced Analytics!** 🚀
