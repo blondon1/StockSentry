@@ -99,8 +99,6 @@ For significant changes, please discuss them first via an issue.
 
 Thank you for your contributions!
 
-
 ## License 📜
 
 This project is licensed under the MIT License.
-
