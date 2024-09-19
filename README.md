@@ -9,7 +9,7 @@ Welcome to **StockSentry**, your ultimate tool for leveraging machine learning t
 ## Key Features 🌟
 
 - **Advanced Sentiment Analysis** 📊: Utilizes FinBERT for cutting-edge financial sentiment analysis.
-**Machine Learning Integration 🤖**: Leverages pystark for advanced stock analysis and MLflow for managing machine learning experiments and models.
+- **Machine Learning Integration 🤖**: Leverages pystark for advanced stock analysis and MLflow for managing machine learning experiments and models.
 - **Comprehensive Technical Indicators** 📈: Includes key indicators like SMA, RSI, and Bollinger Bands.
 - **Real-time Updates** ⏱️: Get the latest stock prices and insights delivered to your inbox.
 - **Secure Configuration** 🔒: Encrypts and securely stores your configuration data.
