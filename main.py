@@ -5,10 +5,11 @@ import pandas as pd
 import os
 from data_collection import fetch_news
 from sentiment_analysis import preprocess_text, get_sentiment
-from model_training import train_model, predict_stock_movement, fetch_historical_data
+from model_training import train_lstm_model, train_random_forest, predict_stock_movement_lstm, predict_stock_movement_rf, fetch_historical_data, ensemble_prediction
 from email_notifications import send_email
 from stock_price import fetch_current_price
 from crypto_utils import generate_key, load_key, save_key, save_config, load_config
+import numpy as np
 
 def get_user_input():
     api_key = input("Enter your Alpha Vantage API key: ")
@@ -81,11 +82,19 @@ def main():
                 # Align sentiment scores with historical data
                 merged_data = pd.merge(current_data, historical, left_on='date', right_on='Date', how='inner')
                 
-                features = merged_data[['sentiment_score', 'SMA_20', 'SMA_50', 'RSI', 'Bollinger_Upper', 'Bollinger_Lower']]
-                labels = merged_data['Close']
+                features = merged_data[['sentiment_score', 'SMA_20', 'SMA_50', 'RSI', 'Bollinger_Upper', 'Bollinger_Lower']].values
+                labels = merged_data['Close'].values
                 
-                model = train_model(features, labels)
-                predicted_prices = predict_stock_movement(model, features)
+                # Train both LSTM and RandomForest models
+                lstm_model = train_lstm_model(features, labels)
+                rf_model = train_random_forest(features, labels)
+                
+                # Predict stock movement using both models
+                lstm_pred = predict_stock_movement_lstm(lstm_model, features)
+                rf_pred = predict_stock_movement_rf(rf_model, features)
+                
+                # Get the ensemble prediction
+                predicted_prices = ensemble_prediction(lstm_pred, rf_pred)
                 
                 predicted_price = predicted_prices.mean()  # Use the mean predicted price for simplicity
                 current_price = fetch_current_price(stock, config['alpha_vantage_api_key'])

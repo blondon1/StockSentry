@@ -1,7 +1,10 @@
-cryptography
-requests
-pandas
-nltk
-transformers
-scikit-learn
+streamlit
+tensorflow
+numpy
+matplotlib
 yfinance
+nltk
+scikit-learn
+transformers
+pyspark
+

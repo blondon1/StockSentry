@@ -9,6 +9,7 @@ Welcome to **StockSentry**, your ultimate tool for leveraging machine learning t
 ## Key Features 🌟
 
 - **Advanced Sentiment Analysis** 📊: Utilizes FinBERT for cutting-edge financial sentiment analysis.
+**Machine Learning Integration 🤖**: Leverages pystark for advanced stock analysis and MLflow for managing machine learning experiments and models.
 - **Comprehensive Technical Indicators** 📈: Includes key indicators like SMA, RSI, and Bollinger Bands.
 - **Real-time Updates** ⏱️: Get the latest stock prices and insights delivered to your inbox.
 - **Secure Configuration** 🔒: Encrypts and securely stores your configuration data.
@@ -79,6 +80,9 @@ Screenshot was taken on 9/4/2024
 ![Terminal Screenshot](images/terminal_screenshot.png)
 *Initial configuration setup in the terminal.*
 
+![Dashboard Screenshot](images/dashboard.png)
+*Dashboard development using Streamlit .*
+
 ## How It Works ⚙️
 
 1. **Sentiment Analysis**: Fetches and analyzes news articles about the stocks in your watchlist using FinBERT.
@@ -100,11 +104,6 @@ For significant changes, please discuss them first via an issue.
 
 Thank you for your contributions!
 
-
 ## License 📜
 
 This project is licensed under the MIT License.
-
----
-
-**StockSentry - Empowering Your Investment Decisions with Advanced Analytics!** 🚀
