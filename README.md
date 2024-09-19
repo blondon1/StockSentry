@@ -79,6 +79,9 @@ For future runs, you will be asked if you want to use the existing configuration
 ![Terminal Screenshot](images/terminal_screenshot.png)
 *Initial configuration setup in the terminal.*
 
+![Dashboard Screenshot](images/dashboard.png)
+*Dashboard development using Streamlit .*
+
 ## How It Works ⚙️
 
 1. **Sentiment Analysis**: Fetches and analyzes news articles about the stocks in your watchlist using FinBERT.
