@@ -6,6 +6,48 @@ from model_training import fetch_historical_data, train_lstm_model, train_random
 from stock_price import fetch_current_price
 from sentiment_analysis import preprocess_text, get_sentiment
 from data_collection import fetch_news
+from pyspark.sql import SparkSession
+
+# Function to initialize Spark session
+def get_spark_session():
+    spark = SparkSession.builder \
+        .appName("StockPredictionApp") \
+        .config("spark.some.config.option", "some-value") \
+        .getOrCreate()
+    return spark
+
+# Function to process large datasets with PySpark
+def process_large_data_with_spark(data):
+    try:
+        spark = get_spark_session()
+
+        # Convert Pandas DataFrame to PySpark DataFrame
+        df = spark.createDataFrame(data)
+
+        # Example of filtering and aggregation using PySpark
+        df_filtered = df.filter(df['close'] > 100)  # Replace 'close' with the actual column name
+        df_grouped = df_filtered.groupBy('symbol').agg({'close': 'avg'})  # Example grouping
+
+        # Convert back to Pandas DataFrame
+        processed_data = df_grouped.toPandas()
+
+        return processed_data
+
+    except Exception as e:
+        st.error(f"Error processing large data: {e}")
+        return None
+
+    finally:
+        spark.stop()  # Stop Spark session to free up resources
+
+# Sample function to simulate fetching large historical data
+def fetch_large_stock_data():
+    # This is a placeholder for actual large dataset fetching logic
+    data = {
+        'symbol': ['AAPL', 'GOOGL', 'NVDA', 'AAPL', 'GOOGL'],
+        'close': [150, 250, 500, 160, 300]
+    }
+    return pd.DataFrame(data)
 
 # Title of the app
 st.title("Stock Market Prediction Dashboard")
@@ -82,3 +124,4 @@ if st.button("Run Sentiment Analysis"):
             st.write(f"Sentiment Score for {stock}: {sentiments}")
         except Exception as e:
             st.error(f"Error fetching sentiment for {stock}: {e}")
+

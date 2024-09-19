@@ -6,4 +6,5 @@ yfinance
 nltk
 scikit-learn
 transformers
+pyspark
 
