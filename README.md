@@ -100,7 +100,6 @@ We welcome contributions! To contribute to StockSentry, please follow these step
 4. **Sign the CLA**: Before we can accept your contributions, you need to sign our [Contributor License Agreement (CLA)](CLA.md). Please read and sign the CLA.
 5. **Submit a Pull Request**: Submit a pull request with your changes and a note indicating that you have signed the CLA.
 
-For significant changes, please discuss them first via an issue.
 
 Thank you for your contributions!
 
